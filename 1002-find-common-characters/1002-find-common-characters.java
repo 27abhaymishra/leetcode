@@ -1,44 +1,32 @@
 class Solution {
     public List<String> commonChars(String[] words) {
-        HashMap<Character,Integer> m= new HashMap<>();
-        HashMap<Character,Integer> n= new HashMap<>();
+          int[] charCount = new int[26]; // To store the minimum counts of each character  
+        // Initialize the charCount with the frequency of the first word  
+        for (char c : words[0].toCharArray()) {  
+            charCount[c - 'a']++;  
+        }  
 
-        for(int i=0;i<words[0].length();i++){
-            char c = words[0].charAt(i);
-            m.put(c,m.getOrDefault(c,0)+1);
-            //System.out.print(m.get(c)+" ");
-        }
-        //System.out.println();
-        for(int i=1;i<words.length;i++){
-            for(int j=0;j<words[i].length();j++){
-                char c = words[i].charAt(j);
-                n.put(c,n.getOrDefault(c,0)+1);
-                //System.out.print(n.get(c)+" ");
-            }
-            //System.out.println();
-            for(char c : m.keySet()){
-                
-                if(n.containsKey(c)){if(m.get(c)>n.get(c)) m.put(c,n.get(c));}
-                else m.put(c,0);
-                n.remove(c);
-                System.out.print(c+" "+m.get(c)+" "+n.get(c)+" ");
-            }
-            System.out.println();
-        }
-        ArrayList<String> p = new ArrayList<>();
-        for(char c:m.keySet()){
-            if(m.get(c)!=0){
-                int count =  m.get(c);
-               
-                while(count>0){
-                String str = "";
-                str = str + c;
-                p.add(str);
-                count--;
-                }
-                
-            }
-        }
-        return p;
+        // Update charCount for each word  
+        for (int i = 1; i < words.length; i++) {  
+            int[] currentCount = new int[26]; // Count for the current word  
+            for (char c : words[i].toCharArray()) {  
+                currentCount[c - 'a']++;  
+            }  
+            // Update the charCount to keep the minimum counts  
+            for (int j = 0; j < 26; j++) {  
+                charCount[j] = Math.min(charCount[j], currentCount[j]);  
+            }  
+        }  
+
+        // Collect characters in the result list  
+        List<String> result = new ArrayList<>();  
+        for (int i = 0; i < 26; i++) {  
+            while (charCount[i] > 0) {  
+                result.add(String.valueOf((char) (i + 'a')));  
+                charCount[i]--;  
+            }  
+        }  
+
+        return result;  
     }
 }
