@@ -1,57 +1,51 @@
 class Solution {
     public int[] searchRange(int[] arr, int target) {
-         int ans[] = {-1 , -1};
-          int n = arr.length;
-          int hi = n-1;
-          int lo = 0;
-         //searching
-          boolean flag = false;
-         while(lo <= hi){
-            int mid = lo + (hi - lo) /2;
+        int n = arr.length;
+        int ans[] = new int[2];
+
+        int lo = 0; int hi = n-1;
+        int fp = -1;
+
+        while(lo <= hi){
+            int mid = lo + (hi - lo) / 2;
 
             if(arr[mid] == target){
-                  flag = true;
-                  break;
+                if( mid > 0  && arr[mid] == arr[mid - 1]){
+                    hi = mid - 1;
+                }else{
+                    fp = mid;
+                    break;
+                }
             }else if(arr[mid] > target){
-                hi= mid -1;
-            }else{
-                lo = mid +1;
-            }
-         }
-         if(flag == false) return ans;
-         
-         //lower bound
-       lo = 0; hi = n-1;
-       int lb = n;
-       
-
-        while(lo <= hi){
-            int mid = lo + (hi - lo) /2;
-            if(arr[mid] >= target){
-                lb = Math.min(lb , mid);
                 hi = mid - 1;
             }else{
                 lo = mid + 1;
             }
         }
-        ans[0] = lb;
+        ans[0] = fp;
 
-        //upper bound;
-
-          lo = 0; hi = n-1;
-        int ub = n;
+           lo = 0;  hi = n-1;
+        int lp = -1;
 
         while(lo <= hi){
-            int mid = lo + (hi - lo) /2;
-            if(arr[mid] > target){
-                ub = Math.min(ub , mid);
+            int mid = lo + (hi - lo) / 2;
+
+            if(arr[mid] == target){
+                if(mid+1 < n  && arr[mid] == arr[mid + 1]){
+                  lo = mid +1;
+                }else{
+                    lp = mid;
+                    break;
+                }
+            }else if(arr[mid] > target){
                 hi = mid - 1;
             }else{
                 lo = mid + 1;
             }
         }
-        ans[1] = ub-1;
+        ans[1] = lp;
 
         return ans;
+
     }
 }
