@@ -10,10 +10,10 @@ class Solution {
                 ans[0] =  mid;
                 right = mid -1;
             }
-            if(target > nums[mid]){
+           else if(target > nums[mid]){
                 left = mid + 1;
             }
-            if(target < nums[mid]){
+            else{
                 right = mid - 1;
             }
         }
@@ -25,10 +25,10 @@ class Solution {
                 ans[1] =  mid;
                 left = mid + 1;
             }
-            if(target > nums[mid]){
+           else if(target > nums[mid]){
                 left = mid + 1;
             }
-            if(target < nums[mid]){
+            else{
                 right = mid - 1;
             }
         }
