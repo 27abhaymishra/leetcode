@@ -10,16 +10,17 @@
  */
 class Solution {
     public ListNode middleNode(ListNode head) {
-          ListNode slow = head;  
-        ListNode fast = head;  
-
-        // Move fast pointer two steps and slow pointer one step  
-        while (fast != null && fast.next != null) {  
-            slow = slow.next;  
-            fast = fast.next.next;  
-        }  
-        
-        // When fast reaches the end, slow will be at the middle  
-        return slow; 
+        ListNode temp = head;
+        int leng = 0;
+        while(temp != null){
+            temp = temp.next;
+            leng++;
+        }
+        int mid = (leng/2 + 1);
+        temp = head;
+        for(int i = 1; i<=mid-1; i++){
+            temp = temp.next;
+        }
+        return temp;
     }
 }
