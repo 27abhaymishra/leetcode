@@ -1,17 +1,16 @@
 
 class Solution {
-    public int levels(TreeNode root){
+    public int levels(TreeNode root , boolean[] ans){
         if(root == null) return 0;
-        return 1 + Math.max(levels(root.left) , levels(root.right));
+        int leftLevels = levels(root.left , ans);
+        int rightLevels = levels(root.right , ans);
+        int diff = Math.abs(leftLevels - rightLevels);
+        if(diff > 1) ans[0] = false;
+        return 1 + Math.max(leftLevels , rightLevels);
     }
     public boolean isBalanced(TreeNode root) {
-        if(root == null) return true;
-        int diff = Math.abs(levels(root.right) - levels(root.left));
-        if(diff > 1) return false;
-        boolean lst = isBalanced(root.left);
-        if(lst == false) return false;
-        boolean rst = isBalanced(root.right);
-        if(rst == false) return false;
-        return true;
+        boolean ans [] = {true};
+        levels(root , ans);
+        return ans[0];
     }
 }
